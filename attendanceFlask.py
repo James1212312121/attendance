@@ -51,11 +51,11 @@ for x in myresult:
         
     text += '''
     <tr>
-        <th> ''' + str(x[0]) + '''</th>
-        <th> ''' + name + '''</th>
-        <th> ''' + classname + '''</th>
-        <th> ''' + classteacher + '''</th>
-        <th> ''' + str(x[2]) + '''</th>
+        <td style="border: 2px solid black"> ''' + str(x[0]) + '''</td>
+        <td style="border: 2px solid black"> ''' + name + '''</td>
+        <td style="border: 2px solid black"> ''' + classname + '''</td>
+        <td style="border: 2px solid black"> ''' + classteacher + '''</td>
+        <td style="border: 2px solid black"> ''' + str(x[2]) + '''</td>
     </tr>
 
     '''
