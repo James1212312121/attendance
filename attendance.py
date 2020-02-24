@@ -126,8 +126,10 @@ try:
             mycursor.execute('insert into ' + table + ' (studentid, classid, datetime) values ("' + str(studentid) + '", "' + str(classid) + '", "' + str(datetime) + '")')
             mydb.commit()
             print("attendance checked")
+            return True
         else:
             print("you already checked in today!!!!!!!")
+            return False
     
     #student = id, first_name last_name nick_name
     #class = id name teacher
@@ -235,11 +237,25 @@ try:
                 print("\n")
                 showClass("classes")
                 print("what is the ID of your class?")
+                lcd.write_string("please insert")
+                lcd.cursor_pos = (1,0)
+                lcd.write_string("class id")
                 classid = input()
+                lcd.clear()
                 if checkForClassId("classes", classid):
                     while True:
+                        lcd.clear()
                         print("\n\n")
                         print("please tag your id card or press the button to exit")
+                        lcd.write_string("Attendance for")
+                        lcd.cursor_pos = (1,0)
+                        mycursor.execute('select * from classes where id = ' + str(classid))
+                        myresult = mycursor.fetchall()
+                        for x in myresult:
+                            classname = str(x[1])
+                        lcd.write_string(classname)
+                        lcd.cursor_pos = (2,0)
+                        lcd.write_string("place your tag")
                         while not (reader.read_id_no_block() or button.is_pressed):
                             sleep(0.01)
                         if button.is_pressed:
@@ -247,7 +263,12 @@ try:
                         else:
                             studentid,name = reader.read()
                             if checkForStudentId("students", studentid):
-                                insertVerifyAttendance(table ,studentid, classid, datetime)
+                                if insertVerifyAttendance(table ,studentid, classid, datetime):
+                                    lcd.clear()
+                                    lcd.write_string("check-in success")
+                                else:
+                                    lcd.clear()
+                                    lcd.write_string("You already Checked-in")
                                 print("\n")
                             sleep(1)
                 else:
