@@ -266,6 +266,14 @@ try:
                                 if insertVerifyAttendance(table ,studentid, classid, datetime):
                                     lcd.clear()
                                     lcd.write_string("check-in success")
+                                    lcd.cursor_pos = (1,0)
+                                    lcd.write_string("Hey! ")
+                                    mycursor.execute('select nick_name from students where id = ' + str(studentid))
+                                    myresult = mycursor.fetchall()
+                                    for x in myresult:
+                                        name = str(x[0])
+                                    lcd.write_string(name)
+                                    sleep(2)
                                 else:
                                     lcd.clear()
                                     lcd.write_string("You already Checked-in")
